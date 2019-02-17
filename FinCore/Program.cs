@@ -14,12 +14,15 @@ namespace FinCore
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args).Run(); // запускаем приложение
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+                .UseKestrel()               // настраиваем веб-сервер Kestrel 
+                .UseContentRoot(Directory.GetCurrentDirectory())    // настраиваем корневой каталог приложения
+                .UseIISIntegration()
+                .UseStartup<Startup>() // устанавливаем главный файл приложения
+                .Build(); // создаем хост
     }
 }
